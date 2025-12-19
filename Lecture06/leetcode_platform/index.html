@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="problem-section">
+            <h1>Problem Title</h1>
+            <p><strong>Problem Description:</strong></p>
+            <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.</p>
+            <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+            <p>You can return the answer in any order.</p>
+
+            <h3>Example 1:</h3>
+            <pre>
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+            </pre>
+
+            <h3>Example 2:</h3>
+            <pre>
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+            </pre>
+            
+            <h3>Constraints:</h3>
+            <ul>
+                <li><code>2 <= nums.length <= 10^4</code></li>
+                <li><code>-10^9 <= nums[i] <= 10^9</code></li>
+                <li><code>-10^9 <= target <= 10^9</code></li>
+                <li>Only one valid answer exists.</li>
+            </ul>
+        </div>
+        <div class="compiler-section">
+            <h2>Code Editor</h2>
+            <textarea id="code-editor" spellcheck="false">
+function twoSum(nums, target) {
+    // Write your code here
+};
+            </textarea>
+            <div class="buttons">
+                <button id="run-btn">Run Code</button>
+                <button id="submit-btn">Submit</button>
+            </div>
+            <div class="output-section">
+                <h3>Output:</h3>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
