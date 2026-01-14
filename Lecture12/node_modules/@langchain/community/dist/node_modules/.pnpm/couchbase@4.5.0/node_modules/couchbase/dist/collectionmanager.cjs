@@ -1,0 +1,290 @@
+"use strict";
+
+
+const require_rolldown_runtime = require('../../../../../../_virtual/rolldown_runtime.cjs');
+const require_utilities$1 = require('./utilities.cjs');
+const require_bindingutilities$1 = require('./bindingutilities.cjs');
+
+//#region ../../node_modules/.pnpm/couchbase@4.5.0/node_modules/couchbase/dist/collectionmanager.js
+var require_collectionmanager = /* @__PURE__ */ require_rolldown_runtime.__commonJS({ "../../node_modules/.pnpm/couchbase@4.5.0/node_modules/couchbase/dist/collectionmanager.js": ((exports) => {
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.CollectionManager = exports.ScopeSpec = exports.CollectionSpec = void 0;
+	const bindingutilities_1 = require_bindingutilities$1.require_bindingutilities();
+	const utilities_1 = require_utilities$1.require_utilities();
+	/**
+	* Contains information about a collection.
+	*
+	* @category Management
+	*/
+	var CollectionSpec = class CollectionSpec {
+		/**
+		* @internal
+		*/
+		constructor(data) {
+			this.name = data.name;
+			this.scopeName = data.scopeName;
+			this.maxExpiry = data.maxExpiry;
+			this.history = data.history;
+		}
+		/**
+		* @internal
+		*/
+		static _fromCppData(scopeName, data) {
+			return new CollectionSpec({
+				name: data.name,
+				scopeName,
+				maxExpiry: data.max_expiry,
+				history: data.history
+			});
+		}
+	};
+	exports.CollectionSpec = CollectionSpec;
+	/**
+	* Contains information about a scope.
+	*
+	* @category Management
+	*/
+	var ScopeSpec = class ScopeSpec {
+		/**
+		* @internal
+		*/
+		constructor(data) {
+			this.name = data.name;
+			this.collections = data.collections;
+		}
+		/**
+		* @internal
+		*/
+		static _fromCppData(data) {
+			let collections;
+			if (data.collections.length > 0) {
+				const scopeName = data.name;
+				collections = data.collections.map((collectionData) => CollectionSpec._fromCppData(scopeName, collectionData));
+			} else collections = [];
+			return new ScopeSpec({
+				name: data.name,
+				collections
+			});
+		}
+	};
+	exports.ScopeSpec = ScopeSpec;
+	/**
+	* CollectionManager allows the management of collections within a Bucket.
+	*
+	* @category Management
+	*/
+	var CollectionManager = class {
+		/**
+		* @internal
+		*/
+		constructor(bucket) {
+			this._bucket = bucket;
+		}
+		get _cluster() {
+			return this._bucket.cluster;
+		}
+		/**
+		* Returns all configured scopes along with their collections.
+		*
+		* @param options Optional parameters for this operation.
+		* @param callback A node-style callback to be invoked after execution.
+		*/
+		async getAllScopes(options, callback) {
+			if (options instanceof Function) {
+				callback = arguments[0];
+				options = void 0;
+			}
+			if (!options) options = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementScopeGetAll({
+					bucket_name: bucketName,
+					timeout
+				}, (cppErr, resp) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					const scopes = resp.manifest.scopes.map((scopeData) => ScopeSpec._fromCppData(scopeData));
+					wrapCallback(null, scopes);
+				});
+			}, callback);
+		}
+		/**
+		* @internal
+		*/
+		async createCollection() {
+			let collectionName = arguments[0];
+			let scopeName = arguments[1];
+			let settings = arguments[2];
+			let options = arguments[3];
+			let callback = arguments[4];
+			if (typeof collectionName === "object") {
+				const spec = collectionName;
+				collectionName = spec.name;
+				scopeName = spec.scopeName;
+				settings = {
+					maxExpiry: spec.maxExpiry,
+					history: spec.history
+				};
+				options = arguments[1];
+				callback = arguments[2];
+				if (options instanceof Function) {
+					callback = arguments[1];
+					options = void 0;
+				}
+			}
+			if (settings instanceof Function) {
+				callback = arguments[2];
+				settings = void 0;
+			} else if (options instanceof Function) {
+				callback = arguments[3];
+				options = void 0;
+			}
+			if (!options) options = {};
+			if (!settings) settings = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			const maxExpiry = settings === null || settings === void 0 ? void 0 : settings.maxExpiry;
+			const history = settings === null || settings === void 0 ? void 0 : settings.history;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementCollectionCreate({
+					bucket_name: bucketName,
+					scope_name: scopeName,
+					collection_name: collectionName,
+					max_expiry: maxExpiry,
+					history,
+					timeout
+				}, (cppErr) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					wrapCallback(err);
+				});
+			}, callback);
+		}
+		/**
+		* Drops a collection from a scope.
+		*
+		* @param collectionName The name of the collection to drop.
+		* @param scopeName The name of the scope containing the collection to drop.
+		* @param options Optional parameters for this operation.
+		* @param callback A node-style callback to be invoked after execution.
+		*/
+		async dropCollection(collectionName, scopeName, options, callback) {
+			if (options instanceof Function) {
+				callback = arguments[2];
+				options = void 0;
+			}
+			if (!options) options = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementCollectionDrop({
+					bucket_name: bucketName,
+					scope_name: scopeName,
+					collection_name: collectionName,
+					timeout
+				}, (cppErr) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					wrapCallback(err);
+				});
+			}, callback);
+		}
+		/**
+		* Updates a collection in a scope.
+		*
+		* @param collectionName The name of the collection to update.
+		* @param scopeName The name of the scope containing the collection.
+		* @param settings The settings to update on the collection.
+		* @param options Optional parameters for this operation.
+		* @param callback A node-style callback to be invoked after execution.
+		*/
+		async updateCollection(collectionName, scopeName, settings, options, callback) {
+			if (options instanceof Function) {
+				callback = arguments[3];
+				options = void 0;
+			}
+			if (!options) options = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementCollectionUpdate({
+					bucket_name: bucketName,
+					scope_name: scopeName,
+					collection_name: collectionName,
+					max_expiry: settings.maxExpiry,
+					history: settings.history,
+					timeout
+				}, (cppErr) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					wrapCallback(err);
+				});
+			}, callback);
+		}
+		/**
+		* Creates a new scope.
+		*
+		* @param scopeName The name of the new scope to create.
+		* @param options Optional parameters for this operation.
+		* @param callback A node-style callback to be invoked after execution.
+		*/
+		async createScope(scopeName, options, callback) {
+			if (options instanceof Function) {
+				callback = arguments[1];
+				options = void 0;
+			}
+			if (!options) options = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementScopeCreate({
+					bucket_name: bucketName,
+					scope_name: scopeName,
+					timeout
+				}, (cppErr) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					wrapCallback(err);
+				});
+			}, callback);
+		}
+		/**
+		* Drops a scope.
+		*
+		* @param scopeName The name of the scope to drop.
+		* @param options Optional parameters for this operation.
+		* @param callback A node-style callback to be invoked after execution.
+		*/
+		async dropScope(scopeName, options, callback) {
+			if (options instanceof Function) {
+				callback = arguments[1];
+				options = void 0;
+			}
+			if (!options) options = {};
+			const bucketName = this._bucket.name;
+			const timeout = options.timeout || this._cluster.managementTimeout;
+			return utilities_1.PromiseHelper.wrap((wrapCallback) => {
+				this._cluster.conn.managementScopeDrop({
+					bucket_name: bucketName,
+					scope_name: scopeName,
+					timeout
+				}, (cppErr) => {
+					const err = (0, bindingutilities_1.errorFromCpp)(cppErr);
+					if (err) return wrapCallback(err, null);
+					wrapCallback(err);
+				});
+			}, callback);
+		}
+	};
+	exports.CollectionManager = CollectionManager;
+}) });
+
+//#endregion
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function () {
+    return require_collectionmanager();
+  }
+});
+//# sourceMappingURL=collectionmanager.cjs.map

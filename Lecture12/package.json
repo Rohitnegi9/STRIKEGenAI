@@ -1,0 +1,24 @@
+{
+  "name": "lecture12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@langchain/community": "^1.1.4",
+    "@langchain/core": "^1.1.13",
+    "@langchain/google-genai": "^2.1.8",
+    "@langchain/pinecone": "^1.0.1",
+    "@langchain/textsplitters": "^1.0.1",
+    "@pinecone-database/pinecone": "^5.1.2",
+    "dotenv": "^17.2.3",
+    "pdf-parse": "^1.1.1",
+    "readline-sync": "^1.4.10"
+  }
+}
