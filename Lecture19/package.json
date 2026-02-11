@@ -1,0 +1,20 @@
+{
+  "name": "graph-rag-movie",
+  "version": "1.0.0",
+  "description": "GraphRAG — Neo4j + Pinecone + Gemini + LangChain.js",
+  "type": "module",
+  "scripts": {
+    "test": "node 1_testConnection.js",
+    "index": "node 7_runIndexing.js",
+    "query": "node 13_runQuery.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@langchain/core": "^1.1.19",
+    "@langchain/google-genai": "^2.1.15",
+    "@pinecone-database/pinecone": "^5.0.2",
+    "dotenv": "^16.4.7",
+    "neo4j-driver": "^6.0.1",
+    "pdf-parse": "^1.1.1"
+  }
+}
