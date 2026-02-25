@@ -17,6 +17,8 @@ Lecture 17: https://www.notion.so/Lecture-17-Project-2fea9af81c98800caa23eccb3fb
 
 Lecture20: https://www.notion.so/LangGraph-306a9af81c9880aaa2e3e37d1384063f?source=copy_link
 
+<!-- Lecture23: https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%2213iZOM3AZo2PCL-PKsNPwmmAU-982Basb%22%5D,%22action%22:%22open%22,%22userId%22:%22114313910349519241757%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing -->
+
 <!-- crypto: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&ids=bitcoin" 
 <!-- news API: `https://news.google.com/rss/search?q=${encodeURIComponent(topic)}&hl=en-IN&gl=IN&ceid=IN:en` -->
 
