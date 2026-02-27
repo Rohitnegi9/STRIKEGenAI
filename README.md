@@ -22,3 +22,5 @@ Lecture20: https://www.notion.so/LangGraph-306a9af81c9880aaa2e3e37d1384063f?sour
 <!-- crypto: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&ids=bitcoin" 
 <!-- news API: `https://news.google.com/rss/search?q=${encodeURIComponent(topic)}&hl=en-IN&gl=IN&ceid=IN:en` -->
 
+
+<!-- Lecture24: https://www.notion.so/Codex-Code-Building-314a9af81c98805ab09eccce5a9e8aca?source=copy_link -->
