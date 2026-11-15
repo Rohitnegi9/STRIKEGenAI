@@ -4,6 +4,8 @@ Lecture02 Notes: https://www.notion.so/Lecture-02-Write-our-first-code-2c0a9af81
 
 Lecture07 Notes: https://www.notion.so/Lecture-07-Build-Code-Reviewer-2d3a9af81c988071b829e3163129b078?source=copy_link
 
+Lecture 09 Notes: notion.so/Where-do-we-use-Eucledian-Distance-2d8a9af81c9880e292f0e1aa81c9da02
+
 
 Lecture 12 Notion: https://www.notion.so/RAG-System-2e8a9af81c9881eab86dfe8bf32fcfb4?source=copy_link
 
